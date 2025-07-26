@@ -28,7 +28,13 @@ import QtQuick.Controls 2.4
 import QtGraphicalEffects 1.0
 import "Components"
 
+
+
 Pane {
+
+	Component.onCompleted: {
+	    console.log("Script carregado")
+	}
     id: root
 
     height: config.ScreenHeight || Screen.height
@@ -67,6 +73,8 @@ Pane {
                                config.PartialBlur == "false" &&
                                config.FormPosition == "right" &&
                                config.BackgroundImageHAlignment == "center"
+
+    //property alias systemButtonVisibility: systemButtons.visible
 
     Item {
         id: sizeHelper
@@ -107,6 +115,120 @@ Pane {
             z: 1
         }
 
+		Row {
+				    id: systemButtonsRow
+				    anchors.top: parent.top
+				    anchors.right: parent.right
+				    anchors.topMargin: 16
+				    anchors.rightMargin: 16
+				    spacing: 12
+				    z: 100
+				
+				    RoundButton {
+				        id: rebootButton
+				        width: 56; height: 56
+				        hoverEnabled: true
+				
+				        property bool showBorder: hovered
+				        property int iconSize: pressed ? 40 : 32
+				
+				        background: Rectangle {
+				            color: "transparent"; radius: 28; border.width: 0
+				        }
+				
+				        contentItem: Item {
+				            anchors.fill: parent; anchors.centerIn: parent
+				
+				            Image {
+				                id: iconReboot
+				                anchors.centerIn: parent
+				                width: rebootButton.iconSize
+				                height: rebootButton.iconSize
+				                source: "Assets/Reboot.svg"
+				                visible: true
+				            }
+				
+				            ColorOverlay {
+				                anchors.fill: iconReboot
+				                source: iconReboot
+				                color: "#8219ba"
+				            }
+				
+				            Rectangle {
+				                anchors.centerIn: parent
+				                width: 60; height: 60; radius: 26
+				                border.width: rebootButton.showBorder ? 3 : 0
+				                border.color: "#8219ba"
+				                color: "transparent"
+				                visible: rebootButton.showBorder
+				                z: 2
+				            }
+				        }
+				
+				        Behavior on iconSize {
+				            NumberAnimation { duration: 100; easing.type: Easing.InOutQuad }
+				        }
+				
+				        onClicked: {
+				            console.log("sddm:", typeof sddm)
+				            if (sddm && typeof sddm.reboot === "function")
+				                sddm.reboot()
+				        }
+				    }
+				
+				    RoundButton {
+				        id: shutdownButton
+				        width: 56; height: 56
+				        hoverEnabled: true
+				
+				        property bool showBorder: hovered
+				        property int iconSize: pressed ? 40 : 32
+				
+				        background: Rectangle {
+				            color: "transparent"; radius: 28; border.width: 0
+				        }
+				
+				        contentItem: Item {
+				            anchors.fill: parent; anchors.centerIn: parent
+				
+				            Image {
+				                id: iconShutdown
+				                anchors.centerIn: parent
+				                width: shutdownButton.iconSize
+				                height: shutdownButton.iconSize
+				                source: "Assets/Shutdown.svg"
+				                visible: true
+				            }
+				
+				            ColorOverlay {
+				                anchors.fill: iconShutdown
+				                source: iconShutdown
+				                color: "#8219ba"
+				            }
+				
+				            Rectangle {
+				                anchors.centerIn: parent
+				                width: 60; height: 60; radius: 26
+				                border.width: shutdownButton.showBorder ? 3 : 0
+				                border.color: "#8219ba"
+				                color: "transparent"
+				                visible: shutdownButton.showBorder
+				                z: 2
+				            }
+				        }
+				
+				        Behavior on iconSize {
+				            NumberAnimation { duration: 100; easing.type: Easing.InOutQuad }
+				        }
+				
+				        onClicked: {
+				            if (sddm && typeof sddm.powerOff === "function")
+				                sddm.powerOff()
+				        }
+				    }
+				}
+						
+
         Button {
             id: vkb
             onClicked: virtualKeyboard.switchState()
@@ -140,7 +262,6 @@ Pane {
                     name: "visible"
                     PropertyChanges {
                         target: form
-                        systemButtonVisibility: false
                         clockVisibility: false
                     }
                     PropertyChanges {
