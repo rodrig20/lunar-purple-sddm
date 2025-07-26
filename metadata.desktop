@@ -1,13 +1,13 @@
 [SddmGreeterTheme]
-Name=Tokyo Night SDDM
-Description=A Tokyo Night Theme for SDDM
+Name=Lunar Purple SDDM
+Description=A Lunar Purple Theme for SDDM
 Author=rototrash
 License=GPL-3.0-or-later
 Type=sddm-theme
 Version=1.0
-Website=https://github.com/tokyo-night-sddm/
+Website=https://github.com/rodrig20/lunar-purple-sddm.git
 Screenshot=preview.png
 MainScript=Main.qml
 ConfigFile=theme.conf
-Theme-Id=tokyo-night-sddm
+Theme-Id=lunar-purple-sddm
 
