@@ -38,9 +38,10 @@ ColumnLayout {
 
     Clock {
         id: clock
-        Layout.alignment: Qt.AlignHCenter | Qt.AlignBottom
+        Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
         Layout.preferredHeight: root.height / 4
         Layout.leftMargin: p != "0" ? a == "left" ? -p : a == "right" ? p : 0 : 0
+        Layout.topMargin: root.height / 10
     }
 
     Input {

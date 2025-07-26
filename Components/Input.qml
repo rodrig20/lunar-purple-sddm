@@ -74,7 +74,7 @@ Column {
                 contentItem: Text {
                     text: model.name
                     font.pointSize: root.font.pointSize * 0.8
-                    font.capitalization: Font.Capitalize
+                    font.capitalization: Font.MixedCase
                     color: selectUser.highlightedIndex === index ? root.palette.highlight.hslLightness >= 0.7 ? "#16161E" : "white" : root.palette.window.hslLightness >= 0.8 ? root.palette.highlight.hslLightness >= 0.8 ? "#16161E" : root.palette.highlight : "white"
                     verticalAlignment: Text.AlignVCenter
                     horizontalAlignment: Text.AlignHCenter
@@ -85,18 +85,27 @@ Column {
                 }
             }
 
-            indicator: Button {
+            indicator: Item {
+                width: selectUser.height
+                height: parent.height
+                z: 10 // garantir que fica por cima de tudo
+
+                Button {
                     id: usernameIcon
-                    width: selectUser.height * 0.8
+                    width: parent.width
                     height: parent.height
-                    anchors.left: parent.left
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.leftMargin: selectUser.height * 0.125
-                    icon.height: parent.height * 0.25
-                    icon.width: parent.height * 0.25
+                    anchors.fill: parent
+                    anchors.leftMargin: -30
                     enabled: false
-                    icon.color: root.palette.text
+                    background: Rectangle {
+                        color: "transparent"
+                        border.color: "transparent"
+                    }
                     icon.source: Qt.resolvedUrl("../Assets/User.svgz")
+                    icon.color: root.palette.text
+                    icon.width: height * 0.25
+                    icon.height: height * 0.25
+                }
             }
 
             background: Rectangle {
@@ -181,7 +190,6 @@ Column {
         TextField {
             id: username
             text: config.ForceLastUser == "true" ? selectUser.currentText : null
-            font.capitalization: config.AllowBadUsernames == "false" ? Font.Capitalize : Font.MixedCase
             anchors.centerIn: parent
             height: root.font.pointSize * 3
             width: parent.width
@@ -276,8 +284,8 @@ Column {
     }
 
     Item {
-        id: secretCheckBox
-        height: root.font.pointSize * 7
+        id: secretCheckBoxCapitalize
+        height: root.font.pointSize * 3
         width: parent.width / 2
         anchors.horizontalCenter: parent.horizontalCenter
 
